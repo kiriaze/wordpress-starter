@@ -65,7 +65,6 @@ function wps_setup() {
 	add_theme_support('wps-breadcrumbs');        //  Enable breadcrumbs
 	add_theme_support('debug');                     //  Enable debug bar
 	add_theme_support('admin_bar');                 //  Enable admin bar
-	add_theme_support('jquery-cdn');                //  Enable to load jQuery from the Google CDN. Issue with infinite scroll if enabled, include migrate
 
 	// remove_theme_support in child theme if undesired, all enabled by default
 	add_theme_support('custom_searchform');         //  Enable use of custom searchform template - /templates/searchform.php
