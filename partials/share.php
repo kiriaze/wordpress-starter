@@ -8,12 +8,6 @@
 */
 ?>
 
-<?php
-	$attachment_id 	= get_post_thumbnail_id( $post->ID );
-	$attachment 	= wp_get_attachment($attachment_id);
-	// permalinks for sharing are currently relative sitewide, should set to absolute only for shares
-?>
-
 <ul class="social-share">
 	<li>Share:</li>
 	<li>
