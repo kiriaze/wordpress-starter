@@ -6,7 +6,8 @@
 
 ## Installation Steps
 
-1. Clone repo
+1. `npm run setup` on initial run.
+2. Subsequent runs; `npm start`
 
 ### Builds
 Run `npm run build` to compile the bundle in production mode
