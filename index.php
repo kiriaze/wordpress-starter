@@ -3,7 +3,7 @@
  * The template is for rendering the index.
  *
  * @package 	WordPress
- * @subpackage 	Mouthwash
+ * @subpackage 	WPS
  * @version 	1.0
 */
 ?>

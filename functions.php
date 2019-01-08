@@ -1,13 +1,13 @@
 <?php
 /**
- * Mouthwash 1.0
+ * WPS 1.0
  *
- * This file enables the core features of the Mouthwash site including sidebars, menus, post thumbnails, post formats, header, backgrounds, and more.
+ * This file enables the core features of the WPS site including sidebars, menus, post thumbnails, post formats, header, backgrounds, and more.
  * Some functions are able to be overridden using child themes. These functions will be wrapped in a function_exists() conditional.
  * They are auto loaded from within functions directory.
  *
  * @package     WordPress
- * @subpackage  Mouthwash
+ * @subpackage  WPS
  * @version     1.0
 */
 
@@ -27,7 +27,6 @@ function load_functions() {
 	require_once locate_template( '/lib/helpers.php', true );
 	require_once locate_template( '/lib/login.php', true );
 	require_once locate_template( '/lib/menus.php', true );
-	require_once locate_template( '/lib/rewrites.php', true );
 	require_once locate_template( '/lib/scripts-styles.php', true );
 	require_once locate_template( '/lib/search.php', true );
 	require_once locate_template( '/lib/sidebars.php', true );

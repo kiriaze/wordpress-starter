@@ -44,11 +44,20 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(jpg|png|gif|svg|mp4|mp3|ttf|eot|woff|woff2)$/,
+				// test: /\.(jpg|png|gif|svg|mp4|mp3|ttf|eot|woff|woff2)$/,
+				test: /\.(jpg|png|gif|svg|mp4|mp3)$/,
 				loader: 'url-loader',
 				options: {
 					limit: 8192, // 10000
 					name: '[path][name].[ext]'
+				}
+			},
+			{
+				test: /\.(ttf|eot|woff|woff2)$/,
+				// exclude: /node_modules/,
+				loader: 'url-loader',
+				options: {
+					name: `${config.assets}/fonts/[name].[ext]`
 				}
 			},
 			{

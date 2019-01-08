@@ -2,7 +2,6 @@ const config            = require('./config.js'); // node config
 const webpack			= require('webpack');
 const path				= require('path');
 const autoprefixer      = require('autoprefixer');
-
 const ip                = require('ip').address();
 
 // recognizes certain classes of webpack errors and cleans, aggregates and prioritizes them to provide a better Developer Experience
@@ -78,7 +77,7 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
-							sourceMap: true
+							sourceMap: true, // if disabled, prevents FOUC/FOUT, sometimes works..
 						}
 					},
 					{

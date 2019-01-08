@@ -114,8 +114,8 @@ function wps_post_class( $classes ){
 /*	Upload svg capability through wp media upload
 ================================================== */
 function cc_mime_types( $mimes ){
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
 }
 add_filter( 'upload_mimes', 'cc_mime_types' );
 
@@ -338,7 +338,7 @@ function truncate_text( $string, $character_limit = 50, $truncation_indicator = 
 		$truncated = $truncated . $truncation_indicator;
 	}
 
-	return sprintf( __('%s', wps_THEME_SLUG), $truncated );
+	return sprintf( __('%s', WPS_THEME_SLUG), $truncated );
 }
 
 /*	TRUNCATE ANYTHING - WORDS
@@ -370,7 +370,7 @@ function full_excerpt() {
 add_filter('excerpt_more', 'wps_excerpt_more');
 function wps_excerpt_more() {
 	global $post;
-	return '<br /><a href="'. get_permalink($post->ID) . '" class="read-more">' . __( 'Read More', wps_THEME_SLUG) . '</a>';
+	return '<br /><a href="'. get_permalink($post->ID) . '" class="read-more">' . __( 'Read More', WPS_THEME_SLUG) . '</a>';
 }
 
 // Example combining truncate_text and wps_excerpt_more
@@ -384,7 +384,7 @@ function wps_title() {
 		if ( get_option('page_for_posts', true) ) {
 			$title = get_the_title( get_option('page_for_posts', true) );
 		} else {
-			$title = __('Latest Posts', wps_THEME_SLUG);
+			$title = __('Latest Posts', WPS_THEME_SLUG);
 		}
 	} elseif ( is_archive() ) {
 		$term = get_term_by( 'slug', get_query_var('term'), get_query_var('taxonomy') );
@@ -393,21 +393,21 @@ function wps_title() {
 		} elseif ( is_post_type_archive() ) {
 			$title = get_queried_object()->labels->name;
 		} elseif ( is_day() ) {
-			$title = sprintf( __('Daily Archives: %s', wps_THEME_SLUG), get_the_date() );
+			$title = sprintf( __('Daily Archives: %s', WPS_THEME_SLUG), get_the_date() );
 		} elseif ( is_month() ) {
-			$title = sprintf( __('Monthly Archives: %s', wps_THEME_SLUG), get_the_date('F Y') );
+			$title = sprintf( __('Monthly Archives: %s', WPS_THEME_SLUG), get_the_date('F Y') );
 		} elseif ( is_year() ) {
-			$title = sprintf( __('Yearly Archives: %s', wps_THEME_SLUG), get_the_date('Y') );
+			$title = sprintf( __('Yearly Archives: %s', WPS_THEME_SLUG), get_the_date('Y') );
 		} elseif ( is_author() ) {
 			$author = get_queried_object();
-			$title = sprintf( __('Author Archives: %s', wps_THEME_SLUG), $author->display_name );
+			$title = sprintf( __('Author Archives: %s', WPS_THEME_SLUG), $author->display_name );
 		} else {
 			$title = single_cat_title( '',false );
 		}
 	} elseif ( is_search() ) {
-		$title = sprintf( __('Search Results for %s', wps_THEME_SLUG), get_search_query() );
+		$title = sprintf( __('Search Results for %s', WPS_THEME_SLUG), get_search_query() );
 	} elseif ( is_404() ) {
-		$title = __('Not Found', wps_THEME_SLUG);
+		$title = __('Not Found', WPS_THEME_SLUG);
 	} else {
 		$title = get_the_title();
 	}
@@ -423,16 +423,16 @@ function wps_title() {
 /*	WPS Search Form
 ============================================ */
 function wps_search_form( $form ) {
-    $form = '
+	$form = '
 <form role="search" method="get" class="search-form" action="'.home_url() .'">
 	<label>
-		<input type="search" class="search-field" placeholder="'. __('Type and press enter', wps_THEME_SLUG) .'" value="" name="s" title="'. __('Search for:', wps_THEME_SLUG) .'">
+		<input type="search" class="search-field" placeholder="'. __('Type and press enter', WPS_THEME_SLUG) .'" value="" name="s" title="'. __('Search for:', WPS_THEME_SLUG) .'">
 	</label>
 	<input type="submit" class="search-submit" value="Search">
 </form>
-    ';
+	';
 
-    return $form;
+	return $form;
 }
 
 add_filter( 'get_search_form', 'wps_search_form' );
@@ -610,25 +610,24 @@ function enable_threaded_comments() {
 	9. Add custom columns to admin
 ============================================ */
 
-//	Add column
-function add_custom_column( $columns ) {
-	global $post;
-
-	if ( get_post_type($post) == 'post' || get_post_type($post) == 'page' ) {
-		$column_thumb = array( 'thumbnail' => __( 'Thumbnail', wps_THEME_SLUG ) );
-		$columns = array_slice( $columns, 0, 2, true ) + $column_thumb + array_slice( $columns, 1, NULL, true );
-	}
-
-	if ( get_post_type($post) == 'page' ) {
-		$columns['template'] = __( 'Page Template', wps_THEME_SLUG );
-	}
-
-	$columns['id'] = 'ID';
-
+//	Add page columns
+function add_custom_page_columns( $columns ) {
+	$columns['template'] = __( 'Page Template', WPS_THEME_SLUG );
+	$column_thumb        = array( 'thumbnail' => __( 'Thumbnail', WPS_THEME_SLUG ) );
+	$columns             = array_slice( $columns, 0, 2, true ) + $column_thumb + array_slice( $columns, 1, NULL, true );
+	$columns['id']       = 'ID';
 	return $columns;
 }
-add_filter( 'manage_posts_columns', 'add_custom_column', 10 );
-add_filter( 'manage_pages_columns', 'add_custom_column', 10 );
+add_filter( 'manage_page_posts_columns', 'add_custom_page_columns', 10 );
+
+// Add post columns
+function add_custom_post_columns( $columns ) {
+	$column_thumb  = array( 'thumbnail' => __( 'Thumbnail', WPS_THEME_SLUG ) );
+	$columns       = array_slice( $columns, 0, 2, true ) + $column_thumb + array_slice( $columns, 1, NULL, true );
+	$columns['id'] = 'ID';
+	return $columns;
+}
+add_filter( 'manage_posts_columns', 'add_custom_post_columns', 10 );
 
 
 //	Add thumbnails to columns
@@ -659,7 +658,7 @@ function display_custom_column_data( $column ) {
 					if ( 0 == strlen( trim( $template_name ) ) || ! file_exists( get_stylesheet_directory() . '/' . $template_name ) ) {
 
 						// ...then we'll set it as default
-						$template_name = __( 'Default', wps_THEME_SLUG );
+						$template_name = __( 'Default', WPS_THEME_SLUG );
 
 					// Otherwise, let's actually get the friendly name of the file rather than the name of the file itself
 					// by using the WordPress `get_file_description` function
@@ -676,11 +675,14 @@ function display_custom_column_data( $column ) {
 
 				endif;
 
-			break;
+		break;
+
 		case 'id':
 			echo $post->ID;
-			break;
+		break;
+
 	}
+
 }
 add_action( 'manage_posts_custom_column', 'display_custom_column_data', 10, 2 );
 add_action( 'manage_pages_custom_column', 'display_custom_column_data', 10, 2 );
@@ -727,9 +729,9 @@ add_action('admin_head', 'id_css');
 
 // boolval fix for php versions under 5.5
 if ( !function_exists('boolval') ) {
-    function boolval($val) {
+	function boolval($val) {
 		return (bool) $val;
-    }
+	}
 }
 
 // Check if on login page
@@ -744,4 +746,18 @@ function load_template_part($template_name, $part_name = null) {
 	$var = ob_get_contents();
 	ob_end_clean();
 	return $var;
+}
+
+// wps get_template_part with optional params
+function wps_get_template_part($path, $args = [], $echo = true) {
+	if (!empty($args)) {
+		extract($args);
+	}
+	if ($echo) {
+		include(locate_template($path . '.php'));
+		return;
+	}
+	ob_start();
+	include(locate_template($path . '.php'));
+	return ob_get_clean();
 }

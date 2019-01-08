@@ -7,6 +7,7 @@
 *:after,
 *:before {
 	box-sizing: inherit;
+	backface-visibility: inherit;
 }
 
 html {
@@ -27,15 +28,15 @@ html, body, input, button, textarea {
 }
 
 ::-moz-selection {
-	background: map-get($colors, selection-bg-color);
-	color: map-get($colors, selection-text-color);
 	text-shadow: none;
+	color: map-get($colors, selection-text-color);
+	background: map-get($colors, selection-bg-color);
 }
 
 ::selection {
-	background: map-get($colors, selection-bg-color);
-	color: map-get($colors, selection-text-color);
 	text-shadow: none;
+	color: map-get($colors, selection-text-color);
+	background: map-get($colors, selection-bg-color);
 }
 
 hr {
@@ -112,6 +113,17 @@ textarea {
 	padding: 0.2em 0;
 }
 
+.a11y {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
 pre {
 	font-family: Monaco;
 	padding: 0.5em 1em;
@@ -158,4 +170,8 @@ strong {
 
 em {
 	font-style: italic;
+}
+
+a {
+	text-decoration: none;
 }

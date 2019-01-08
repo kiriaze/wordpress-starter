@@ -3,11 +3,18 @@
 // Change login page style adding your custom css in $output
 function wps_login_head() {
 	
-	wp_enqueue_style( 'wps_login_head', get_stylesheet_directory_uri() . '/assets/css/login.bundle.css', false );
-	
-	// wp_enqueue_script('jquery');
-	wp_enqueue_script( 'login', get_stylesheet_directory_uri() . '/assets/js/login.bundle.js' );
+	if ( $_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['REMOTE_ADDR'] !== '127.0.0.1' ) :
+		wp_enqueue_style( 'wps_login_head', get_stylesheet_directory_uri() . '/assets/css/login.bundle.css', false );
+	endif;
 
+	if ( $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['REMOTE_ADDR'] === '127.0.0.1' ) :
+		wp_register_script('login', '//127.0.0.1:3000/assets/js/login.bundle.js', [], '', true );
+	else:
+		wp_register_script( 'login', get_stylesheet_directory_uri() . '/assets/js/login.bundle.js', [], '', true );
+	endif;
+
+	wp_enqueue_script('login');
+	
 	// $output = '
 	// 	.login h1 a {
 	// 		background: url() no-repeat center !important;

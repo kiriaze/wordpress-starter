@@ -7,20 +7,17 @@
  * @version   1.0
  */
 ?>
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie7 lt-ie9" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7]>         <html class="no-js ie7 lt-ie8 lt-ie9" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" <?php language_attributes(); ?>> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
 	<title><?php __(wp_title('&laquo;', true, 'right'), WPS_THEME_SLUG); ?></title>
 
-    <meta name="description" content="<?php is_single() ? single_post_title('', true) : bloginfo('name'); echo " - "; bloginfo('description'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="<?php is_single() ? single_post_title('', true) : bloginfo('name'); echo " - "; bloginfo('description'); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<?php wp_head(); ?>
-
 </head>
 
 <body <?php body_class(); ?>>
@@ -29,5 +26,6 @@
 
 	<?php
 		do_action('get_header');
-		get_template_part( 'partials/header' );
+		get_template_part('partials/svg');
+		get_template_part('partials/header');
 	?>

@@ -60,11 +60,9 @@ function wps_setup() {
 	));
 
 	// WPS Framework Supports
-	add_theme_support('wps-relative-urls');      //  Enable relative URLs
-	add_theme_support('wps-rewrites');           //  Enable URL rewrites for only parent theme
 	add_theme_support('wps-breadcrumbs');        //  Enable breadcrumbs
-	add_theme_support('debug');                     //  Enable debug bar
-	add_theme_support('admin_bar');                 //  Enable admin bar
+	// add_theme_support('debug');                     //  Enable debug bar
+	// add_theme_support('admin_bar');                 //  Enable admin bar
 
 	// remove_theme_support in child theme if undesired, all enabled by default
 	add_theme_support('custom_searchform');         //  Enable use of custom searchform template - /templates/searchform.php
@@ -73,5 +71,23 @@ function wps_setup() {
 	
 	// add_theme_support('remove_admin_menu_items');   //  Remove Unwanted Admin Menu Items(left hand side)
 	// add_theme_support('remove_admin_bar_links');    //  Remove Unwanted Admin Menu Items(admin bar)
+
+	function disable_gutenberg($is_enabled, $post_type) {
+		
+		switch ($post_type) {
+			
+			case 'page':
+				return false;
+				break;
+			
+			default:
+				break;
+		}
+
+		return $is_enabled;
+		
+	}
+
+	add_filter('use_block_editor_for_post_type', 'disable_gutenberg', 10, 2);
 
 }

@@ -28,7 +28,8 @@ module.exports = {
 	// swap commented out proxy/localhost if needing to access on other devices via ip address
 	// 'localhost' || '0.0.0.0'
 	proxy: false,
-	localhost: 'localhost',
+	localhost: '127.0.0.1', // for safari sake..
+	// localhost: 'localhost',
 	// proxy: true,
 	// localhost: '0.0.0.0',
 

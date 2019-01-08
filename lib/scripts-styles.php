@@ -19,14 +19,16 @@ function theme_enqueue_scripts() {
 	
 	// only load css if not on local environment
 	// as this conflicts with local js that imports scss
-	if ( $_SERVER['SERVER_NAME'] !== 'localhost' ) :
+
+	if ( $_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['REMOTE_ADDR'] !== '127.0.0.1' ) :
 		wp_register_style( 'app', get_stylesheet_directory_uri() . '/assets/css/app.bundle.css' );
 		wp_enqueue_style('app');
 	endif;
 
 	// JS
-	if ( $_SERVER['SERVER_NAME'] === 'localhost' ) :
-		wp_register_script('app', '//localhost:3000/assets/js/app.bundle.js', [], '', true );
+
+	if ( $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['REMOTE_ADDR'] === '127.0.0.1' ) :
+		wp_register_script('app', '//127.0.0.1:3000/assets/js/app.bundle.js', [], '', true );
 	else :
 		wp_register_script('app', get_stylesheet_directory_uri() . '/assets/js/app.bundle.js', [], '', true );
 	endif;
