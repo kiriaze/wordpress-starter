@@ -14,24 +14,32 @@ function theme_enqueue_scripts() {
 	}
 
 	// Register Styles & Scripts
-	
-	// CSS
-	
-	// only load css if not on local environment
-	// as this conflicts with local js that imports scss
-
-	if ( $_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['REMOTE_ADDR'] !== '127.0.0.1' ) :
-		wp_register_style( 'app', get_stylesheet_directory_uri() . '/assets/css/app.bundle.css' );
-		wp_enqueue_style('app');
-	endif;
 
 	// JS
-
+	// if local
 	if ( $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['REMOTE_ADDR'] === '127.0.0.1' ) :
-		wp_register_script('app', '//127.0.0.1:3000/assets/js/app.bundle.js', [], '', true );
+
+		$path = '//127.0.0.1:3000/';
+
 	else :
-		wp_register_script('app', get_stylesheet_directory_uri() . '/assets/js/app.bundle.js', [], '', true );
+
+		$path = get_stylesheet_directory_uri();	
+
+		// CSS
+		
+		// only load css if not on local environment
+		// as this conflicts with local js that imports scss
+
+		wp_register_style( 'app', $path . '/assets/css/app.bundle.css' );
+		wp_enqueue_style('app');
+		
+		wp_register_style( 'styleguide', $path . '/assets/css/styleguide.bundle.css' );
+		wp_enqueue_style('styleguide');
+
 	endif;
+	
+	wp_register_script('app', $path . '/assets/js/app.bundle.js', [], '', true );
+	wp_register_script('styleguide', $path . '/assets/js/styleguide.bundle.js', [], '', true );
 
 	wp_localize_script( 'app', 'adminAjax',
 		array(
@@ -41,6 +49,10 @@ function theme_enqueue_scripts() {
 	);
 	
 	wp_enqueue_script('app');
+
+	if ( is_page('styleguide') ) {
+		wp_enqueue_script('styleguide');
+	}
 
 }
 

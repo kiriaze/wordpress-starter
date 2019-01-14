@@ -1,20 +1,17 @@
 <?php
 /**
- * Template Name: Archive Template
+ * Template Name: Sitemap Template
  * The template is for rendering the sitemap.
  *
  * @package 	WordPress
  * @subpackage 	WPS
  * @version 	1.0
 */
-
 ?>
 
 <?php if ( have_posts() ) :
 
 	while ( have_posts() ) : the_post(); ?>
-
-		<p>Simply add a page using our custom crafted Archives Template and you’re all set. Also, you get to control which archives you wish to display via the Theme Options Panel, Archives Settings. It’s simple, fast, and just works. Yup.</p>
 
 		<h4>Last 20 Posts</h4>
 		<ul>

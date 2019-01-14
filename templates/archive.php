@@ -1,12 +1,12 @@
 <?php
 /**
- * The template is for rendering archives.
+ * Template Name: Archive Template
+ * The template is for rendering the blog.
  *
  * @package 	WordPress
  * @subpackage 	WPS
  * @version 	1.0
 */
-
 ?>
 
 <?php if ( have_posts() ) : ?>
