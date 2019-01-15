@@ -17,7 +17,7 @@ function theme_enqueue_scripts() {
 
 	// JS
 	// if local
-	if ( $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['REMOTE_ADDR'] === '127.0.0.1' ) :
+	if ( $_SERVER['SERVER_NAME'] === 'localhost' || strpos($_SERVER['SERVER_NAME'], '.local') !== false ) :
 
 		$path = '//127.0.0.1:3000/';
 

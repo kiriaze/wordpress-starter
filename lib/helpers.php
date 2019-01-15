@@ -140,7 +140,7 @@ function wps_debug($current_user){
 	if ( current_theme_supports('debug')  )
 
 	// if user is currently logged in and its in local env
-	if ( is_user_logged_in() && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
+	if ( is_user_logged_in() && ($_SERVER['SERVER_NAME'] === 'localhost' || strpos($_SERVER['SERVER_NAME'], '.local') !== false) ) {
 
 		global $current_user;
 		get_currentuserinfo();
