@@ -44,7 +44,6 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				// test: /\.(jpg|png|gif|svg|mp4|mp3|ttf|eot|woff|woff2)$/,
 				test: /\.(jpg|png|gif|svg|mp4|mp3)$/,
 				loader: 'url-loader',
 				options: {
