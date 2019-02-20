@@ -20,10 +20,12 @@ function theme_enqueue_scripts() {
 	if ( $_SERVER['SERVER_NAME'] === 'localhost' || strpos($_SERVER['SERVER_NAME'], '.local') !== false ) :
 
 		$path = '//127.0.0.1:3000/';
+		$footer = false;
 
 	else :
 
-		$path = get_stylesheet_directory_uri();	
+		$path = get_stylesheet_directory_uri();
+		$footer = true;
 
 		// CSS
 		
@@ -38,8 +40,8 @@ function theme_enqueue_scripts() {
 
 	endif;
 	
-	wp_register_script('app', $path . '/assets/js/app.bundle.js', [], '', true );
-	wp_register_script('styleguide', $path . '/assets/js/styleguide.bundle.js', [], '', true );
+	wp_register_script('app', $path . '/assets/js/app.bundle.js', [], '', $footer );
+	wp_register_script('styleguide', $path . '/assets/js/styleguide.bundle.js', [], '', $footer );
 
 	wp_localize_script( 'app', 'adminAjax',
 		array(
