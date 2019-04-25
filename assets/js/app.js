@@ -76,6 +76,21 @@ class App {
 
 		// menu();
 
+
+		$('[data-close-overlay]').on('click', (e) => {
+			$('[data-overlay]').removeClass('is-active');
+		});
+
+		$('.toggle-menu').on('click', (e) => {
+			e.preventDefault();
+			$('.menu-overlay').addClass('is-active');
+		});
+
+		$('.toggle-contact').on('click', (e) => {
+			e.preventDefault();
+			$('.contact-overlay').addClass('is-active');
+		});
+
 	};
 
 }

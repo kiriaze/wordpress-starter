@@ -1,6 +1,6 @@
 <!-- menu overlay when toggled via menu cta -->
-<div class="overlay contact-overlay">
-	<span class="overlay__close">
+<div class="overlay contact-overlay" data-overlay>
+	<span class="overlay__close" data-close-overlay>
 		<div class="icon-close">
 			<svg><use xlink:href="#icon-close"></use></svg>
 		</div>

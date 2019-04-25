@@ -58,8 +58,8 @@
 	top: 0;
 	left: 0;
 	overflow: hidden;
-	// opacity: 0;
-	// visibility: hidden;
+	opacity: 0;
+	visibility: hidden;
 	transform: opacity .15s cubic-bezier(.52,0,.43,.99),
 				visibility .15s cubic-bezier(.52,0,.43,.99);
 	&.is-active {
@@ -145,7 +145,7 @@
 .contact-overlay {
 	display: flex;
 	
-	display: none;
+	// display: none;
 
 	align-items: center;
 	justify-content: center;
