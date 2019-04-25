@@ -33,6 +33,8 @@ class WPS_Template_Check {
 
 }
 
+// Note: move these to setup.php
+
 //	If in array, return true (custom filters within child themes)
 function wps_display_sidebar() {
 	$sidebar_array = new WPS_Template_Check(
@@ -59,6 +61,7 @@ function wps_display_custom_template() {
 		[],
 		// template check
 	    [
+	    	'templates/quiz.php'
 	    	// 'templates/home.php',
 	    	// 'templates/builder.php',
 	    	// 'templates/typography.php'

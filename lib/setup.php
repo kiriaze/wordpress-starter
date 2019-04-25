@@ -16,7 +16,6 @@
  * @author    Constantine Kiriaze
  */
 
-
 add_action( 'after_setup_theme', 'wps_setup', 10 );
 function wps_setup() {
 
@@ -37,7 +36,14 @@ function wps_setup() {
 
 	// Custom Image Sizes
 	add_theme_support( 'post-thumbnails' );
-	// add_image_size('custom-size-example', 1400, 720, true);
+
+	// max-width of site container? 1680/1920
+	// general rul for full-width elements; hero/banners/etc
+	add_image_size('full', 1680, 0);
+	// add_image_size('article-hero', 1680, 400, true); // maybe set crop orientation to top left for all?
+	// add_image_size('article-card', 400, 250, array( 'left', 'top' )); // maybe increase size for the larger res too
+	// add_image_size('article-card-large', 890, 710, true); // archive cards / 770x600 for comp, but larger for large resolutions
+	// // 
 
 	// HTML5 -Switches default core markup for search form, comment form, and comments to output valid HTML5.
 	add_theme_support( 'html5', array(
@@ -67,16 +73,24 @@ function wps_setup() {
 	// remove_theme_support in child theme if undesired, all enabled by default
 	add_theme_support('custom_searchform');         //  Enable use of custom searchform template - /templates/searchform.php
 	add_theme_support('nice-search');               //  Enables clean search in url; from /?s= to /search/result
-	add_theme_support('single-search-result');      //  Enables redirect to first result
+	// add_theme_support('single-search-result');      //  Enables redirect to first result
+	// add_theme_support('cpt-search-result', ['questions']);      //  Enables cpt for search results
 	
 	// add_theme_support('remove_admin_menu_items');   //  Remove Unwanted Admin Menu Items(left hand side)
 	// add_theme_support('remove_admin_bar_links');    //  Remove Unwanted Admin Menu Items(admin bar)
 
+	///////////////////////////////////////////
+	// Other
+	///////////////////////////////////////////
+
+	// remove gutenburg editor for pages
+	add_filter('use_block_editor_for_post_type', 'disable_gutenberg', 10, 2);
 	function disable_gutenberg($is_enabled, $post_type) {
 		
 		switch ($post_type) {
 			
 			case 'page':
+			case 'questions':
 				return false;
 				break;
 			
@@ -88,6 +102,29 @@ function wps_setup() {
 		
 	}
 
-	add_filter('use_block_editor_for_post_type', 'disable_gutenberg', 10, 2);
+	// create doctor/provider user role
+	// or use plugin: https://wordpress.org/plugins/members/
+	// do we want to restrict all access to the site other than their dashboard and account settings?
+	add_role(
+		'provider',
+		__( 'Provider' ),
+		array(
+			'read' => false
+		)
+	);
+
+
+	///////////////////////////////////////////
+	// ACF
+	///////////////////////////////////////////
+
+	// faster load times for acf in backend
+	// by removing wp meta fields - test
+	add_filter('acf/settings/remove_wp_meta_box', '__return_true', 20);
+
+	// theme options page - acf
+	if ( function_exists('acf_add_options_page') ) {
+		acf_add_options_page();
+	}
 
 }

@@ -2,11 +2,12 @@
 
 function theme_enqueue_scripts() {
 
-	wp_deregister_script('jquery'); // Deregister WordPress jQuery
+	// leaving jquery in for woocommerce - not sure how that affects the jquery included within app.js
+	// wp_deregister_script('jquery'); // Deregister WordPress jQuery
 
 	// Gzip Compression
 	global $compress_scripts, $concatenate_scripts;
-	$compress_scripts = 1;
+	$compress_scripts    = 1;
 	$concatenate_scripts = 1;
 
 	if ( defined('ENFORCE_GZIP') ) {
@@ -20,6 +21,8 @@ function theme_enqueue_scripts() {
 	if ( $_SERVER['SERVER_NAME'] === 'localhost' || strpos($_SERVER['SERVER_NAME'], '.local') !== false ) :
 
 		$path = '//127.0.0.1:3000/';
+
+		// enqueing this in the header rather than the footer helps with local animations/lazyloading/etc.
 		$footer = false;
 
 	else :
@@ -32,16 +35,16 @@ function theme_enqueue_scripts() {
 		// only load css if not on local environment
 		// as this conflicts with local js that imports scss
 
-		wp_register_style( 'app', $path . '/assets/css/app.bundle.css' );
+		wp_register_style( 'app', $path . '/assets/css/app.bundle.css', [], WPS_THEME_VER );
 		wp_enqueue_style('app');
 		
-		wp_register_style( 'styleguide', $path . '/assets/css/styleguide.bundle.css' );
+		wp_register_style( 'styleguide', $path . '/assets/css/styleguide.bundle.css', [], WPS_THEME_VER );
 		wp_enqueue_style('styleguide');
 
 	endif;
 	
-	wp_register_script('app', $path . '/assets/js/app.bundle.js', [], '', $footer );
-	wp_register_script('styleguide', $path . '/assets/js/styleguide.bundle.js', [], '', $footer );
+	wp_register_script('app', $path . '/assets/js/app.bundle.js', [], WPS_THEME_VER, $footer );
+	wp_register_script('styleguide', $path . '/assets/js/styleguide.bundle.js', [], WPS_THEME_VER, $footer );
 
 	wp_localize_script( 'app', 'adminAjax',
 		array(

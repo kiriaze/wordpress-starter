@@ -4,12 +4,13 @@
 
 // Example
 $breakpoints: (
-	'tiny'     : 480px,
-	'small'    : 640px,
-	'medium'   : 1024px,
-	'large'    : 1280px,
-	'xlarge'   : 1440px,
-	'xxlarge'  : 1720px
+	'tiny'     : 320px,
+	'small'    : 480px,
+	'medium'   : 768px,
+	'large'    : 1024px,
+	'xlarge'   : 1280px,
+	'xxlarge'  : 1440px,
+	'xxxlarge' : 1920px
 );
 
 ////////////////////////////////////////////////////////
@@ -46,13 +47,14 @@ $row-class:						'row'; // defaults to [data-layout = "grid"]
 $column-class:					'col'; // defaults to [data-columns = "$"]
 $grid-columns:					12; // max number of columns
 $gutter:						2rem;
+// $debug:                         true;
 
 ////////////////////////////////////////////////////////
 // font stacks - core/_fonts.scss
 ////////////////////////////////////////////////////////
 
-$body-font:						'Open Sans', helvetica, sans-serif;
-$header-font:					'Open Sans', $body-font;
+$body-font:						'Moderat', helvetica, sans-serif;
+$header-font:					'Moderat', $body-font;
 
 ////////////////////////////////////////////////////////
 // Base Typography Values
@@ -60,27 +62,36 @@ $header-font:					'Open Sans', $body-font;
 
 $base-font-size:				10px;
 $base-line-height:				1.5;
-$body-font-size:                1.3rem;
-
-////////////////////////////////////////////////////////
-// Font Weights
-////////////////////////////////////////////////////////
+$body-font-size:                1.6rem;
 
 ////////////////////////////////////////////////////////
 // Colors
 ////////////////////////////////////////////////////////
 
-
-// $vars set in _settings.scss
 $colors: (
-	primary: #f5f5f5,
-	accent: #ff0000,
-	dark-grey: #202020,
-	selection-bg-color: purple,
+	selection-bg-color: #193f4c,
 	selection-text-color: white,
-	success-color: #31aa51,
-	error-color: #d42a2a
+	
+	base-white: #fff,
+	base-light: #CEDDE2,
+	base-medium: #8C9FA5,
+	base-dark: #576569,
+	base-black: #000000,
+
+	brand-offwhite: #f8f5f0,
+	brand-primary: #f06459,
+	brand-secondary: #193f4c,
+	brand-charcoal: #1a2322,
+	
+	brand-text: #193f4c,
+	brand-divider: #193f4c,
+
+	state-success: #31aa51,
+	state-error: #F06459,
+
+	social-facebook: #3b5998,
+	social-instagram: #405de6,
+	social-linkedin: #0077b5,
+	social-pinterest: #bd081c,
+	social-twitter: #1da1f2
 );
-
-
-

@@ -1,0 +1,44 @@
+////////////////////////////////////////////
+// General Layout
+////////////////////////////////////////////
+
+html {
+	background: map-get($colors, brand-charcoal);
+	// // possibly the best solve!
+	// // might just use VW's instead for this site...after mobile breakpoint
+	// @include mq('xxxlarge') {
+	// 	font-size: 11px; // 12px too much, maybe 11px?
+	// }
+}
+
+body {
+	padding: 4rem; // is it global?
+}
+
+// maybe unused?
+.container {
+	// margin: 0 auto;
+	// padding: 0 2rem;
+	// max-width: 98rem;
+	// &--small {
+	// 	max-width: 74rem;
+	// }
+}
+
+
+////////////////////////////////////////////
+// Link styles
+////////////////////////////////////////////
+
+a {
+	color: map-get($colors, brand-offwhite);
+	&:hover {
+
+	}
+}
+
+// modal, login form, copy
+.link {
+	font-weight: 700;
+	font-size: 1.4rem;
+}

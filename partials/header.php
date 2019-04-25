@@ -1,7 +1,18 @@
-<header role="banner" id="header">
+<header class="header">
 
-	<nav id="nav">
-		<?php wps_menu_output( array('theme_location'=>'main-menu', 'container' => '', 'menu_class'=>'main-menu') ); ?>
-	</nav>
-
+	<a href="javascript:;" class="toggle-menu">Menu</a>
+	<a href="javascript:;" class="toggle-contact">Contact</a>
+	
+	<h1><?php echo get_bloginfo('title'); ?></h1>
+	
+	<!-- span or h tag -->
+	<span>An Offbeat Experiment</span>
+	
 </header>
+
+<!-- part out -->
+<div class="menu-overlay">
+	
+</div>
+
+<?php // clean_custom_menu('main-menu', 'main-menu'); ?>

@@ -8,7 +8,7 @@
  */
 ?>
 <!doctype html>
-<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" <?php language_attributes(); ?>> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
@@ -18,14 +18,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<?php wp_head(); ?>
+
 </head>
 
 <body <?php body_class(); ?>>
 	
 	<!--[if lt IE 8]><div class="alert alert-warning"><?php _e('You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience. <a class="close" data-dismiss="alert" href="#">&times;</a>', WPS_THEME_SLUG); ?></div><![endif]-->
-
-	<?php
-		do_action('get_header');
-		get_template_part('partials/svg');
-		get_template_part('partials/header');
-	?>

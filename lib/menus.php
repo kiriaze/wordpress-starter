@@ -1,16 +1,18 @@
 <?php
 
+// possibly abstract the array of menus into setup.php
+// and pass them into this function; if so, do the same with widgets, sidebars, templates, etc.
 if ( function_exists( 'register_nav_menus' ) ) {
-    register_nav_menus(
-    	array(
-    		'main-menu' 	=> 'Main Menu',
-    		'footer-menu' 	=> 'Footer Menu',
-    		'mobile-menu' 	=> 'Mobile Menu',
+	register_nav_menus(
+		array(
+			'main-menu' 	=> 'Main Menu',
+			'footer-menu' 	=> 'Footer Menu',
+			'mobile-menu' 	=> 'Mobile Menu',
 		)
 	);
 }
 
-if( !function_exists('wps_menu_output') ) {
+if ( !function_exists('wps_menu_output') ) {
 
 	function wps_menu_output($args=array()){
 
@@ -39,6 +41,29 @@ if( !function_exists('wps_menu_output') ) {
 
 	}
 
+}
+
+// This function is responsible for adding custom class to parent menu item's
+// look at helper menu class filters to ignore removal
+add_filter( 'wp_nav_menu_objects', 'add_menu_parent_class', 10, 2 );
+function add_menu_parent_class( $items ) {
+	
+	$parents = array();
+	
+	foreach ( $items as $item ) {
+		// Check if the item is a parent item
+		if ( $item->menu_item_parent && $item->menu_item_parent > 0 ) {
+			$parents[] = $item->menu_item_parent;
+		}
+	}
+
+	foreach ( $items as $item ) {
+		if ( in_array( $item->ID, $parents ) ) {
+			$item->classes[] = 'has-children';
+		}
+	}
+
+	return $items;
 }
 
 // initial menu registration in admin
@@ -81,37 +106,35 @@ function initial_menu_setup() {
 // endforeach;
 class NestedMenu {
 
-    private $flat_menu;
-    public $items;
+	private $flat_menu;
+	public $items;
 
-    function __construct($name) {
+	function __construct($name) {
 
 		$this->flat_menu = wp_get_nav_menu_items($name);
 		$this->items     = array();
 
 		if ( $this->flat_menu ) {
 			foreach ( $this->flat_menu as $item ) {
-			    if ( !$item->menu_item_parent ) {
-			        array_push($this->items, $item);
-			    }
+				if ( !$item->menu_item_parent ) {
+					array_push($this->items, $item);
+				}
 			}
 		}
 
-    }
+	}
 
-    public function get_submenu($item) {
-        $submenu = array();
-        foreach ( $this->flat_menu as $subitem ) {
-            if ( $subitem->menu_item_parent == $item->ID ) {
-                array_push($submenu, $subitem);
-            }
-        }
-        return $submenu;
-    }
+	public function get_submenu($item) {
+		$submenu = array();
+		foreach ( $this->flat_menu as $subitem ) {
+			if ( $subitem->menu_item_parent == $item->ID ) {
+				array_push($submenu, $subitem);
+			}
+		}
+		return $submenu;
+	}
 
 }
-
-
 
 // Return sub menus only, accepts multiple through arrays
 // array(
@@ -137,7 +160,7 @@ function nav_submenu_objects_filter( $items, $args ) {
 		return $items;
 	}
 
- 	// prepare a slug for every item
+	// prepare a slug for every item
 	foreach ( $items as $item ) {
 		if ( empty($item->slug) ) {
 			$item->slug = sanitize_title_with_dashes($item->title);
@@ -157,7 +180,7 @@ function nav_submenu_objects_filter( $items, $args ) {
 		return array();
 	}
 
- 	//  walk finding items until all levels are exhausted
+	//  walk finding items until all levels are exhausted
 	$parents = array($cursor);
 	$out     = array();
 
@@ -179,4 +202,104 @@ function nav_submenu_objects_filter( $items, $args ) {
 	}
 
 	return $out;
+}
+
+
+// Custom menu markup
+// Used primarily for the Plans dropdown with extra details like image
+// Intented to use with locations, like 'primary'
+// clean_custom_menu("primary");
+function clean_custom_menu( $theme_location, $menu_class ) {
+	if ( ($theme_location) && ($locations = get_nav_menu_locations()) && isset($locations[$theme_location]) ) {
+	
+		$menu       = get_term( $locations[$theme_location], 'nav_menu' );
+		$menu_items = wp_get_nav_menu_items($menu->term_id);
+		
+		$menu_list  = '<ul class="menu '. $menu_class .'">' ."\n";
+		
+		$count      = 0;
+		$submenu    = false;
+
+		// store parent id's of items for has-children class
+		$parents = [];
+		foreach( $menu_items as $menu_item ) {
+			// Check if the item is a parent item
+			if ( $menu_item->menu_item_parent && $menu_item->menu_item_parent > 0 ) {
+				$parents[] = $menu_item->menu_item_parent;
+			}
+
+		}
+		// 
+
+		foreach( $menu_items as $menu_item ) {
+
+			$link    = $menu_item->url;
+			$title   = $menu_item->title;
+			$desc    = $menu_item->description;
+			$obj     = $menu_item->object;
+			$classes = '';
+			$image   = get_field('menu_item_image', $menu_item) ? get_field('menu_item_image', $menu_item) : '';
+
+			// assign parent class to items with children
+			if ( in_array( $menu_item->ID, $parents ) ) {
+				$menu_item->classes[] = 'has-children';
+				// remove empty classes, and space delimiter
+				$classes = implode(' ', array_filter($menu_item->classes));
+			}
+
+			if ( !$menu_item->menu_item_parent ) {
+				$parent_id = $menu_item->ID;
+				$menu_list .= '<li class="menu__item '. $classes .'">' ."\n";
+				$menu_list .= '<a href="'.$link.'">'.$title.'</a>' ."\n";
+			}
+
+			if ( $parent_id == $menu_item->menu_item_parent ) {
+
+				if ( !$submenu ) {
+					$submenu = true;
+					$sub_class = $image ? 'sub-menu--image' : '';
+					$menu_list .= '<ul class="sub-menu '. $sub_class .'">' ."\n";
+				}
+
+				$menu_list .= '<li class="menu__item">' ."\n";
+
+				// if item has an image attached
+				// show an alternate layout for submenu items
+				if ( $image ) {
+					$menu_list .= '<a href="'.$link.'">';
+						$menu_list .= '<img src="'. $image['sizes']['shop_single']  .'" alt="">';
+						$menu_list .= '<h5>' . $title . '</h5>';
+						$menu_list .= '<h6>' . $menu_item->description . '</h6>';
+					$menu_list .= '</a>' ."\n";
+				} else {
+					$menu_list .= '<a href="'.$link.'">'.$title.'</a>' ."\n";
+				}
+
+				$menu_list .= '</li>' ."\n";
+
+
+				if ( $menu_items[ $count + 1 ]->menu_item_parent != $parent_id && $submenu ){
+					$menu_list .= '</ul>' ."\n";
+					$submenu = false;
+				}
+
+			}
+
+			if ( $menu_items[ $count + 1 ]->menu_item_parent != $parent_id ) { 
+				$menu_list .= '</li>' ."\n";      
+				$submenu = false;
+			}
+
+			$count++;
+		
+		}
+
+		$menu_list .= '</ul>' ."\n";
+
+	} else {
+		$menu_list = '<!-- no menu defined in location "'.$theme_location.'" -->';
+	}
+	
+	echo $menu_list;
+
 }

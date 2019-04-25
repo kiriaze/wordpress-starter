@@ -5,27 +5,20 @@
  *
  */
 function wps_nice_search_redirect() {
+	
 	global $wp_rewrite;
-	if ( !isset($wp_rewrite) || !is_object($wp_rewrite) || !$wp_rewrite->using_permalinks() ) {
+
+	if ( !isset($wp_rewrite) || !is_object($wp_rewrite) || !$wp_rewrite->get_search_permastruct() ) {
 		return;
 	}
 
 	$search_base = $wp_rewrite->search_base;
 
-	if ( is_search() && !is_admin() && strpos($_SERVER['REQUEST_URI'], "/{$search_base}/") === false ) {
-		wp_redirect( home_url( "/{$search_base}/" . urlencode(get_query_var('s')) ) );
+	if ( is_search() && !is_admin() && strpos($_SERVER['REQUEST_URI'], "/{$search_base}/") === false && strpos($_SERVER['REQUEST_URI'], '&') === false ) {
+		wp_redirect(get_search_link());
 		exit();
 	}
 
-}
-
-// Hotfix for http://core.trac.wordpress.org/ticket/13961 for WP versions less than 3.5
-if ( version_compare( $wp_version, '3.5', '<=' ) ) {
-	function wps_nice_search_urldecode_hotfix( $q ) {
-		if ( $q->get( 's' ) && empty( $_GET['s'] ) && is_main_query() )
-			$q->set( 's', urldecode( $q->get( 's' ) ) );
-	}
-	add_action( 'pre_get_posts', 'wps_nice_search_urldecode_hotfix' );
 }
 
 if ( current_theme_supports('nice-search') ) {
@@ -43,19 +36,52 @@ function wps_request_filter($query_vars) {
 	if (isset($_GET['s']) && empty($_GET['s'])) {
 		$query_vars['s'] = ' ';
 	}
-
 	return $query_vars;
 }
 add_filter('request', 'wps_request_filter');
 
 /**
  * Tell WordPress to use searchform.php from the templates/ directory
+ * Global custom search form ( defaults to generic form )
+ * Can extend to different templates if needed; e.g. different form for cpt
  */
 if ( current_theme_supports('custom_searchform') ) :
 	function wps_get_search_form($form) {
+		global $wp_query;
 		$form = '';
-		locate_template('/templates/searchform.php', true, false);
+		$post_type = $_GET['post_type'];
+		if ( $wp_query->is_search && !is_admin() ) {
+			if ( $post_type == 'questions' ) {
+				locate_template('/templates/search-questions.php', true, false);
+			} else {
+				locate_template('/templates/search-default.php', true, false);
+			}
+		}
 		return $form;
 	}
 	add_filter('get_search_form', 'wps_get_search_form');
+endif;
+
+
+/**
+ * Search for Questions CPT (help)
+ * Required for CPT's otherwise WP errors out
+ */
+if ( current_theme_supports('cpt-search-result') ) :
+	function searchfilter($query) {
+		global $_wp_theme_features;
+		$args = $_wp_theme_features['cpt-search-result'][0];
+		if ( $query->is_search && !is_admin() ) {
+			if ( isset($_GET['post_type']) ) {
+				$type = $_GET['post_type'];
+				if ( in_array($type, $args) ) {
+					$query->set('post_type', $args);
+				}
+			} else {
+				$query->set('post_type', 'post');
+			}
+		}
+		return $query;
+	}
+	add_filter('pre_get_posts', 'searchfilter');
 endif;

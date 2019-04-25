@@ -9,16 +9,18 @@
 */
 ?>
 
-<?php if ( have_posts() ) : ?>
+<?php if ( have_posts() ) :
 
-	<?php while ( have_posts() ) : the_post(); ?>
+	while ( have_posts() ) : the_post();
 
-		<?php get_template_part( 'content/content', get_post_format() ); ?>
+		get_template_part( 'content/content', get_post_format() );
 
-	<?php endwhile; ?>
+	endwhile;
 
-<?php else :
+else :
 
 	get_template_part( 'partials/no-results' );
 
-endif; wp_reset_postdata(); ?>
+endif;
+
+wp_reset_postdata(); ?>

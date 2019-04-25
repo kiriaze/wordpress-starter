@@ -30,26 +30,22 @@ function wps_body_class( $classes ){
 	global $post;
 
 	//	Conditional Checking
-	$template 			  	= !is_tax() && !is_category() ? basename( get_page_template() ) : '';
-	$loggedIn 			  	= is_user_logged_in() ? 'logged-in' : '';
-	$blog 	  			  	= ( is_archive() || is_search() || is_home() ) ? 'archive blog list-view' : '';
-	$archive				= is_archive() ? strtolower(post_type_archive_title('', false)) : '';
-
-	$author					= is_author() ? 'author' : '';
-
-	$single 				= is_single() ? 'single '.sanitize_html_class($post->post_name) : '';
-
-	$page_slug 				= !is_search() && !is_404() && isset( $post->ID ) ? $post->post_type . '-' . $post->post_name : '';
+	$loggedIn     = is_user_logged_in() ? 'logged-in' : '';
+	$template     = !is_tax() && !is_category() ? basename( get_page_template() ) : '';
+	$templateName = $template ? 'page-template-'. substr($template, 0, -4) : '';
+	
+	$posts        = ( is_category() || is_search() || is_home() ) ? 'archive-posts' : '';
+	$archive      = is_post_type_archive() ? 'archive-' . strtolower(post_type_archive_title('', false)) : '';
+	$author       = is_author() ? 'author-template' : '';
+	$single       = is_single() ? 'single-'. $post->post_type : '';
 
 	//	Output classes
 	return array(
-		$blog,
+		$posts,
 		$archive,
 		$author,
-		$page_slug,
-		substr($template, 0, -4), // template name
-		$loggedIn, // logged-in class
-		get_post_type(),
+		$templateName,
+		$loggedIn,
 		$single
 	);
 
@@ -63,6 +59,7 @@ function wps_body_class( $classes ){
 add_filter('nav_menu_css_class', 'wps_css_attributes_filter', 100, 2);
 add_filter('nav_menu_item_id', 'remove_wps_css_attributes_filter', 100, 2);
 add_filter('page_css_class', 'remove_wps_css_attributes_filter', 100, 2);
+
 function remove_wps_css_attributes_filter($var) {
 	$var = is_array($var) ? array_intersect( $var,
 		array(
@@ -73,9 +70,12 @@ function remove_wps_css_attributes_filter($var) {
 	) : '';
 	return $var;
 }
+
 function wps_css_attributes_filter($classes, $item) {
 	$var = is_array($item->classes) ? array_intersect( $item->classes,
 		array(
+			'has-children',
+			// 'menu-item-has-children',
 			'current-menu-item',
 			'menu-parent-item',
 			'current_page_ancestor',
@@ -518,7 +518,6 @@ add_filter( 'wp_insert_post_data', 'wps_default_comments_off' );
 ================================================== */
 
 add_action('get_header', 'enable_threaded_comments');
-
 function enable_threaded_comments() {
 	if (!is_admin()) {
 		if (is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
@@ -542,21 +541,21 @@ function enable_threaded_comments() {
 // }
 
 
-// /*	Reading Time
-// ================================================== */
-// function reading_time() {
-// 	global $post;
-// 	//READING TIME CALCULATIONS
-// 	$mycontent = $post->post_content;
-// 	$words = str_word_count(strip_tags($mycontent));
-// 	$reading_time = floor($words / 100);
+/*	Reading Time
+================================================== */
+function reading_time() {
+	global $post;
+	// READING TIME CALCULATIONS
+	$mycontent = $post->post_content;
+	$words = str_word_count(strip_tags($mycontent));
+	$reading_time = floor($words / 200); // avg is 250 words per min
 
-// 	//IF LESS THAN A MINUTE - DISPLAY 1 MINUTE
-// 	if ($reading_time == 0 )  {
-// 		$reading_time = '1';
-// 	}
-// 	return $reading_time;
-// }
+	// IF LESS THAN A MINUTE - DISPLAY 1 MINUTE
+	if ($reading_time == 0 )  {
+		$reading_time = '1';
+	}
+	return $reading_time;
+}
 
 
 /*	Post Views
@@ -620,8 +619,11 @@ function add_custom_page_columns( $columns ) {
 }
 add_filter( 'manage_page_posts_columns', 'add_custom_page_columns', 10 );
 
+
 // Add post columns
 function add_custom_post_columns( $columns ) {
+	global $post;
+	if ( $post->post_type === 'product' ) return;
 	$column_thumb  = array( 'thumbnail' => __( 'Thumbnail', WPS_THEME_SLUG ) );
 	$columns       = array_slice( $columns, 0, 2, true ) + $column_thumb + array_slice( $columns, 1, NULL, true );
 	$columns['id'] = 'ID';
@@ -635,6 +637,8 @@ function display_custom_column_data( $column ) {
 
 	global $post;
 
+	// if ( $post->post_type === 'product' ) return;
+
 	if ( get_post_type($post) == 'post' || get_post_type($post) == 'page' ) :
 		if ( $column == 'thumbnail' ) :
 			echo get_the_post_thumbnail( $post->ID, array(35, 35) );
@@ -642,6 +646,7 @@ function display_custom_column_data( $column ) {
 	endif;
 
 	switch ( $column ) {
+
 		case 'template':
 
 			if ( get_post_type($post) == 'page' ) :
@@ -649,26 +654,26 @@ function display_custom_column_data( $column ) {
 				$template_name = '';
 
 				// If we're looking at our custom column, then let's get ready to render some information.
-				if ( 'template' == $column ) {
+				if ( 'template' == $column ) :
 
 					// First, the get name of the template
 					$template_name = get_page_template_slug( $post->ID );
 
 					// If the file name is empty or the template file doesn't exist (because, say, meta data is left from a previous theme)...
-					if ( 0 == strlen( trim( $template_name ) ) || ! file_exists( get_stylesheet_directory() . '/' . $template_name ) ) {
+					if ( 0 == strlen( trim( $template_name ) ) || ! file_exists( get_stylesheet_directory() . '/' . $template_name ) ) :
 
 						// ...then we'll set it as default
 						$template_name = __( 'Default', WPS_THEME_SLUG );
 
 					// Otherwise, let's actually get the friendly name of the file rather than the name of the file itself
 					// by using the WordPress `get_file_description` function
-					} else {
+					else:
 
 						$template_name = get_file_description( get_stylesheet_directory() . '/' . $template_name );
 
-					} // end if
+					endif;
 
-				} // end if
+				endif;
 
 				// Finally, render the template name
 				echo $template_name;
@@ -690,9 +695,9 @@ add_action( 'manage_pages_custom_column', 'display_custom_column_data', 10, 2 );
 
 //	Register the column as sortable
 function custom_column_register_sortable( $columns ) {
+	$columns['id']        = 'id';
 	$columns['thumbnail'] = 'thumbnail';
-	$columns['template'] = 'template';
-	$columns['id'] = 'id';
+	$columns['template']  = 'template';
 
 	return $columns;
 }

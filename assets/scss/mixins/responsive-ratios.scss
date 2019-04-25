@@ -7,8 +7,9 @@
 	$padding: unquote( ( $y / $x ) * 100 + '%' );
 	@if $pseudo {
 		&:before {
-			@include pseudo($pos: relative);
+			content: '';
 			width: 100%;
+			position: relative;
 			padding-top: $padding;
 		}
 	} @else {
