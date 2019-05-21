@@ -39,7 +39,7 @@ function wps_setup() {
 
 	// max-width of site container? 1680/1920
 	// general rul for full-width elements; hero/banners/etc
-	add_image_size('full', 1680, 0);
+	// add_image_size('full', 1680, 0);
 	// add_image_size('article-hero', 1680, 400, true); // maybe set crop orientation to top left for all?
 	// add_image_size('article-card', 400, 250, array( 'left', 'top' )); // maybe increase size for the larger res too
 	// add_image_size('article-card-large', 890, 710, true); // archive cards / 770x600 for comp, but larger for large resolutions
@@ -101,18 +101,6 @@ function wps_setup() {
 		return $is_enabled;
 		
 	}
-
-	// create doctor/provider user role
-	// or use plugin: https://wordpress.org/plugins/members/
-	// do we want to restrict all access to the site other than their dashboard and account settings?
-	add_role(
-		'provider',
-		__( 'Provider' ),
-		array(
-			'read' => false
-		)
-	);
-
 
 	///////////////////////////////////////////
 	// ACF
