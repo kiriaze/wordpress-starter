@@ -61,7 +61,6 @@ function wps_display_custom_template() {
 		[],
 		// template check
 	    [
-	    	'templates/quiz.php'
 	    	// 'templates/home.php',
 	    	// 'templates/builder.php',
 	    	// 'templates/typography.php'
