@@ -40,6 +40,8 @@ const skrolly = ( params = {} ) => {
 
 			if ( entry.intersectionRatio > 0 ) {
 
+				// console.log(entry);
+
 				// if ( !reverse ) {
 				// 	// it's good to remove observer,
 				// 	// if you don't need it any more (e.g. lazyloading)
@@ -50,13 +52,11 @@ const skrolly = ( params = {} ) => {
 				// console.log(entry.target.classList + ' in view');
 
 				// e.g. data-skrolly='fade-in' data-skrolly-delay='500ms'
-				let delay  = entry.target.dataset.skrollyDelay || '0';
+				let delay = entry.target.dataset.skrollyDelay || '0';
+				// when elements are in viewport, do fancy; e.g. doRad();
+				let cb    = entry.target.dataset.skrollyCb || '';
 
-				let cb = entry.target.dataset.skrollyCb || '';
-				// when elements are in viewport, do fancy
-				// e.g. init();
 				entry.target.style.transitionDelay = delay;
-				
 				reveal(entry.target);
 
 				// run callback
@@ -82,10 +82,30 @@ const skrolly = ( params = {} ) => {
 
 	});
 
+	// merge data-skrolly elems with grouped children
+	let elems    = [];
+	let children = [];
+	let elemsMap = [...document.querySelectorAll(el)].map((x) => {
+		if ( x.hasAttribute('data-skrolly-group') ) {
+			// skrolly-delay
+			[...x.children].map((y,index) => {
+				let delay = x.dataset.skrollyDelay.split('ms')[0];
+				y.dataset.skrollyDelay = delay*(index+1)/2 + 'ms'
+				// y.dataset.skrollyDelay = x.dataset.skrollyDelay;
+			})
+			children = [...x.children];
+		} else {
+			elems.push(x);
+		}
+	});
+	elems = [...children, ...elems];
+
+	// console.log(elems); // its out of order, but does it matter?
+
 	// get only these elements,
 	// which are not revealed yet
 	const elements = [].filter.call(
-		document.querySelectorAll(el),
+		elems,
 		el => !isRevealed(el, revealClass)
 	);
 
