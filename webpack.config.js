@@ -80,7 +80,7 @@ module.exports = {
 						options: {
 							// to allow css before js
 							// this fixes things like lazyload, animations..
-							singleton: true
+							// singleton: true
 						}
 					},
 					{
