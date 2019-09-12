@@ -37,7 +37,7 @@ function da_hide_acf_admin() {
 	// get the current site url
 	$site_url = get_bloginfo( 'url' );
 
-	if ( $site_url === 'https://kannavis.local' ) {
+	if ( $site_url === 'https://site.local' ) {
 		// show the acf menu item 
 		return true;
 	} else {
