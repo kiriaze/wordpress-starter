@@ -40,8 +40,7 @@ const lazyload = (params = {}) => {
 		fetchImage(src).then(() => {
 			image.tagName === 'IMG' ?
 				image.src = src :
-				image.style.backgroundImage = 'url('+ src +')';
-			// image.src = src;
+				image.style.backgroundImage = 'url('+ src +')'; // these makes 2 requests..
 			image.classList.add('lazyloaded');
 		})
 	}
@@ -49,7 +48,7 @@ const lazyload = (params = {}) => {
 	const fetchImage = (url) => {
 		return new Promise((resolve, reject) => {
 			const image = new Image();
-			image.src = url;
+			image.src = url; // these makes 2 requests..
 			image.onload = resolve;
 			image.onerror = reject;
 		});

@@ -7,7 +7,7 @@ if ( function_exists( 'register_nav_menus' ) ) {
 		array(
 			'main-menu' 	=> 'Main Menu',
 			'footer-menu' 	=> 'Footer Menu',
-			'mobile-menu' 	=> 'Mobile Menu',
+			'mobile-menu' 	=> 'Mobile Menu'
 		)
 	);
 }
@@ -206,7 +206,6 @@ function nav_submenu_objects_filter( $items, $args ) {
 
 
 // Custom menu markup
-// Used primarily for the Plans dropdown with extra details like image
 // Intented to use with locations, like 'primary'
 // clean_custom_menu("primary");
 function clean_custom_menu( $theme_location, $menu_class ) {
@@ -238,7 +237,6 @@ function clean_custom_menu( $theme_location, $menu_class ) {
 			$desc    = $menu_item->description;
 			$obj     = $menu_item->object;
 			$classes = '';
-			$image   = get_field('menu_item_image', $menu_item) ? get_field('menu_item_image', $menu_item) : '';
 
 			// assign parent class to items with children
 			if ( in_array( $menu_item->ID, $parents ) ) {
@@ -257,26 +255,12 @@ function clean_custom_menu( $theme_location, $menu_class ) {
 
 				if ( !$submenu ) {
 					$submenu = true;
-					$sub_class = $image ? 'sub-menu--image' : '';
 					$menu_list .= '<ul class="sub-menu '. $sub_class .'">' ."\n";
 				}
 
 				$menu_list .= '<li class="menu__item">' ."\n";
-
-				// if item has an image attached
-				// show an alternate layout for submenu items
-				if ( $image ) {
-					$menu_list .= '<a href="'.$link.'">';
-						$menu_list .= '<img src="'. $image['sizes']['shop_single']  .'" alt="">';
-						$menu_list .= '<h5>' . $title . '</h5>';
-						$menu_list .= '<h6>' . $menu_item->description . '</h6>';
-					$menu_list .= '</a>' ."\n";
-				} else {
 					$menu_list .= '<a href="'.$link.'">'.$title.'</a>' ."\n";
-				}
-
 				$menu_list .= '</li>' ."\n";
-
 
 				if ( $menu_items[ $count + 1 ]->menu_item_parent != $parent_id && $submenu ){
 					$menu_list .= '</ul>' ."\n";

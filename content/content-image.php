@@ -21,7 +21,7 @@
 			<?php
 				// grab attachment meta, play with data
 				$attachment_id = get_post_thumbnail_id( $post->ID );
-				$attachment_meta = wp_get_attachment($attachment_id);
+				$attachment_meta = wp_get_attachment_metadata($attachment_id);
 				// pp($attachment_meta);
 				$title 			= $attachment_meta['title'];
 				$alt 			= $attachment_meta['alt'];

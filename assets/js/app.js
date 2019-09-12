@@ -36,8 +36,10 @@ import skrolly from './skrolly.js';
 import lazyload from './lazyload.js';
 import debounce from './debounce.js';
 import throttle from './throttle.js';
-import ui from './ui.js';
 import utility from './utility.js';
+
+// 
+import ui from './ui.js';
 
 // Views
 // e.g. checkout
@@ -72,7 +74,7 @@ class App {
 		throttle();
 
 		ui();
-		utility();
+		utility.init();
 
 		// menu();
 

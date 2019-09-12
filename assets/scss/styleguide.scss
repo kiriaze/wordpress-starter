@@ -2,7 +2,10 @@
 
 body.page-styleguide {
 	background: white;
-	#main {
+	section {
+		text-align: left;
+	}
+	#main-content {
 		display: flex;
 		flex-flow: column;
 		overflow: hidden;
@@ -23,7 +26,7 @@ body.page-styleguide {
 					border-top: .1rem solid #eee;
 				}
 				a {
-					color: lighten($text-grey,10);
+					color: #ccc;
 					display: block;
 					font-size: 1.5rem;
 					padding: 1.5rem 3rem;
@@ -67,28 +70,39 @@ body.page-styleguide {
 	&__colors {
 
 		li {
-			width: 10rem;
-			height: 20rem;
+			width: 15rem;
+			height: 15rem;
+			position: relative;
 			vertical-align: top;
 			display: inline-block;
+			padding: 1rem;
 			margin: 0 2rem 2rem 0;
-			position: relative;
+			// margin: 0 2rem 15rem 0;
+
+			cursor: pointer;
+			
 			span {
 				position: absolute;
-				bottom: 1rem;
-				width: 100%;
+				bottom: 2rem;
 				color: white;
+
+				opacity: 0;
+
+				width: calc(100% - 2rem );
 				font-size: 1.5rem;
 				text-align: center;
 				letter-spacing: .1rem;
 				font-family: $header-font;
 			}
+			&:hover span {
+				opacity: 1;
+			}
 		}
 
-		.bg--white {
+		.bg--base-white {
 			border: 0.1rem solid #e6e6e8;
 			span {
-				color: $black;
+				color: #000;
 			}
 		}
 
@@ -105,6 +119,15 @@ body.page-styleguide {
 		.sg-copy {
 			display: block;
 			margin-top: 2rem;
+		}
+		&.buttons {
+			padding: 2rem 0;
+		}
+		&.dark {
+			background: map-get($colors, base-dark);
+		}
+		&.other {
+			background: map-get($colors, base-medium);
 		}
 	}
 	&__title--small {

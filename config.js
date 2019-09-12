@@ -19,6 +19,7 @@ module.exports = {
 	// match with package.json dependencies
 	// $ npm install package --save
 	dependencies: {
+		// '_': 'underscore',
 		'$': 'jquery',
 		// 'THREE': 'three',
 		// 'jQuery': 'jquery',

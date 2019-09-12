@@ -39,6 +39,11 @@ function wps_body_class( $classes ){
 	$author       = is_author() ? 'author-template' : '';
 	$single       = is_single() ? 'single-'. $post->post_type : '';
 
+	$is_404       = is_404() ? 'page-template-404' : '';
+
+	// custom bg
+	$is_legal     = $post->post_name == 'terms-conditions' || $post->post_name == 'privacy-policy' ? $post->post_name : '';
+
 	//	Output classes
 	return array(
 		$posts,
@@ -46,7 +51,9 @@ function wps_body_class( $classes ){
 		$author,
 		$templateName,
 		$loggedIn,
-		$single
+		$single,
+		$is_404,
+		$is_legal
 	);
 
 	return $classes;
@@ -454,16 +461,19 @@ endif;
 
 /*	Search only posts, not pages
 ============================================ */
-if ( !is_admin() ) {
-	function wps_search_filter($query) {
-		if ( $query->is_search && !is_admin() ) {
-			$post_types	= apply_filters('wps_search_filter', $query);
-			$query->set( 'post_type', $post_types );
-		}
-		return $query;
-	}
-	add_filter('pre_get_posts','wps_search_filter');
-}
+
+// commenting out since it breaks search json api
+
+// if ( !is_admin() ) {
+// 	function wps_search_filter($query) {
+// 		if ( $query->is_search && !is_admin() ) {
+// 			$post_types	= apply_filters('wps_search_filter', $query);
+// 			$query->set( 'post_type', $post_types );
+// 		}
+// 		return $query;
+// 	}
+// 	add_filter('pre_get_posts','wps_search_filter');
+// }
 
 /* ============================================
 	6. Commenting

@@ -1,4 +1,8 @@
+import scrollTo from './scrollTo';
+
 const ui = () => {
+
+	scrollTo();
 
 };
 

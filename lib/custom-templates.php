@@ -46,10 +46,10 @@ function wps_display_sidebar() {
 			'is_404'
 		],
 		// template check
-	    [
-	    	'templates/full-width.php',
-    	]
-    );
+		[
+			'templates/full-width.php',
+		]
+	);
 
 	return apply_filters('wps_display_sidebar', $sidebar_array->display);
 }
@@ -60,12 +60,12 @@ function wps_display_custom_template() {
 		// leave empty
 		[],
 		// template check
-	    [
-	    	// 'templates/home.php',
-	    	// 'templates/builder.php',
-	    	// 'templates/typography.php'
-    	]
-    );
+		[
+			// 'templates/home.php',
+			// 'templates/builder.php',
+			// 'templates/typography.php'
+		]
+	);
 
 	return apply_filters('wps_display_custom_template', $custom_array->display);
 }

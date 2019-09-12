@@ -48,7 +48,7 @@ module.exports = {
 				loader: 'url-loader',
 				options: {
 					limit: 8192, // 10000
-					name: '[path][name].[ext]'
+					name: `[path][name].[ext]`
 				}
 			},
 			{
@@ -63,7 +63,13 @@ module.exports = {
 				test: /\.scss$/,
 				exclude: /node_modules/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					// MiniCssExtractPlugin.loader,
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: {
+							publicPath: '../../', // so bg images that are referenced like ../images/name.png work in prod
+						}
+					},
 					'css-loader',
 					'postcss-loader',
 					'sass-loader'

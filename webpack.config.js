@@ -26,6 +26,7 @@ module.exports = {
 	entry: entry,
 	
 	devServer: {
+		https: true,
 		disableHostCheck: true, // 3.1.14 hmr issues; quick fix
 		host: config.localhost,
 		port: config.port.webpack,
@@ -39,7 +40,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, config.src),
 		filename: `${config.assets}/js/[name].bundle.js`,
-		publicPath: `http://${config.proxy ? ip : config.localhost}:${config.port.webpack}/`
+		publicPath: `//${config.proxy ? ip : config.localhost}:${config.port.webpack}/`
 	},
 
 	plugins: [
