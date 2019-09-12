@@ -6,7 +6,7 @@ add_filter('acf/settings/remove_wp_meta_box', '__return_true', 20);
 
 // 
 function my_acf_google_map_api( $api ){
-	$api['key'] = 'AIzaSyCw6D1jxnu4kfL_v1OR4uMlpdQbhMPMFzs';
+	$api['key'] = '';
 	return $api;
 }
 
