@@ -37,7 +37,7 @@ elseif ( is_page() ) :
 elseif ( is_singular($post_type) ) :
 
 	if ( $post_type && locate_template( '/templates/single-'. $post_type .'.php' ) != '' ) :
-		$template = 'single-'. $post_type .'.php';
+		$template = '/templates/single-'. $post_type .'.php';
 	else :
 		$template = '/templates/single.php';
 	endif;
