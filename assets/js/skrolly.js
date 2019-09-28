@@ -88,12 +88,11 @@ const skrolly = ( params = {} ) => {
 	let elemsMap = [...document.querySelectorAll(el)].map((x) => {
 		if ( x.hasAttribute('data-skrolly-group') ) {
 			// skrolly-delay
-			[...x.children].map((y,index) => {
+			[...x.children].map((y, index) => {
 				let delay = x.dataset.skrollyDelay.split('ms')[0];
 				y.dataset.skrollyDelay = delay*(index+1)/2 + 'ms'
-				// y.dataset.skrollyDelay = x.dataset.skrollyDelay;
-			})
-			children = [...x.children];
+				children.push(y);
+			});
 		} else {
 			elems.push(x);
 		}

@@ -20,6 +20,12 @@
 [data-skrolly^="fade-dowm"].revealed,
 [data-skrolly-group^="fade-down"] > *.revealed {
 	opacity: 1;
+}
+
+[data-skrolly^="fade-up"].revealed,
+[data-skrolly-group^="fade-up"] > *.revealed,
+[data-skrolly^="fade-dowm"].revealed,
+[data-skrolly-group^="fade-down"] > *.revealed {
 	transform: translate3d(0, 0, 0);
 }
 
@@ -29,12 +35,9 @@
 	transform: scale(1);
 }
 
-[data-skrolly^="fade-in"]  {
-	opacity: 0;
-	backface-visibility: hidden;
-	transition: opacity .45s ease-in-out;
-}
-
+// 
+[data-skrolly^="fade-in"],
+[data-skrolly-group^="fade-in"] > *,
 [data-skrolly^="fade-up"],
 [data-skrolly-group^="fade-up"] > *,
 [data-skrolly^="fade-dowm"],
@@ -43,7 +46,15 @@
 [data-skrolly-group^="zoom-out"] > * {
 	opacity: 0;
 	backface-visibility: hidden;
-	transform: translate3d(0, 0, 0);
+}
+
+[data-skrolly^="fade-in"],
+[data-skrolly-group^="fade-in"] > *,
+[data-skrolly^="fade-up"],
+[data-skrolly-group^="fade-up"] > *,
+[data-skrolly^="fade-dowm"],
+[data-skrolly-group^="fade-down"] > * {
+
 	// orig
 	transition: opacity .45s ease-in-out, 
 				// transform .45s cubic-bezier(.52,0,.43,.99); // jenky
@@ -55,22 +66,26 @@
 	// 			transform .3s cubic-bezier(.395,0,.135,1);
 }
 
-[data-skrolly^="fade-up"] {
-	// transform: translate3d(0, 2rem, 0);
+[data-skrolly^="fade-in"],
+[data-skrolly-group^="fade-in"] > * {
+	transition: opacity .45s ease-in-out;
+}
+
+[data-skrolly^="fade-up"],
+[data-skrolly-group^="fade-up"] > * {
 	transform: translate3d(0, 1.5rem, 0);
-	// transform: translate3d(0, 1.2rem, 0);
 }
 
-[data-skrolly^="fade-down"] {
-	// transform: translate3d(0, -2rem, 0);
+[data-skrolly^="fade-down"],
+[data-skrolly-group^="fade-down"] > * {
 	transform: translate3d(0, -1.5rem, 0);
-	// transform: translate3d(0, -1.2rem, 0);
 }
 
-[data-skrolly^="zoom-out"] {
-	// transform: scale(1.03);
+[data-skrolly^="zoom-out"],
+[data-skrolly-group^="zoom-out"] > * {
 	transform: scale(1.08);
 	transition: opacity .45s ease-in-out, 
 				// transform 1.2s cubic-bezier(0.1, 0.01, 0, 0.83);
-				transform 1.2s cubic-bezier(0.1, 0.01, 0, 0.65);
+				// transform 1.2s cubic-bezier(0.1, 0.01, 0, 0.65);
+				transform .45s cubic-bezier(.215,.61,.355,1); // nice
 }
