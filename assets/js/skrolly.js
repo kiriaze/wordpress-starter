@@ -89,7 +89,7 @@ const skrolly = ( params = {} ) => {
 		if ( x.hasAttribute('data-skrolly-group') ) {
 			// skrolly-delay
 			[...x.children].map((y, index) => {
-				let delay = x.dataset.skrollyDelay.split('ms')[0];
+				let delay = x.dataset.skrollyDelay ? x.dataset.skrollyDelay.split('ms')[0] : '';
 				y.dataset.skrollyDelay = delay*(index+1)/2 + 'ms'
 				children.push(y);
 			});
