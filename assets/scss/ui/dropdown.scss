@@ -1,0 +1,103 @@
+[data-dropdown] {
+	cursor: pointer;
+	position: relative;
+	display: inline-block;
+
+	width: 100%;
+	appearance: none;
+	border-radius: 0;
+	font-size: 1.6rem;
+	font-weight: 500;
+	line-height: 3rem;
+	padding: 1.2rem 3rem;
+	font-family: $body-font;
+	color: map-get($colors, brand-cta);
+	background-color: map-get($colors, brand-primary);
+	border: .1rem solid map-get($colors, brand-divider);
+
+	ul {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		z-index: 10;
+
+		top: 100%;
+		left: -.1rem;
+		right: -.1rem;
+		background-color: map-get($colors, brand-primary);
+		max-height: 36.5rem;
+		overflow: scroll;
+		border: .1rem solid map-get($colors, brand-divider);
+		transition: all .35s ease;
+
+
+		@include mq('medium') {
+
+		}
+		
+		@include mq('large') {
+
+		}
+
+		li {
+			padding: 0 3rem;
+			line-height: 4rem;
+			border-bottom: .1rem solid map-get($colors, brand-divider);
+			@include mq('medium') {
+				line-height: 6rem;
+			}
+			@include mq('large') {
+
+			}
+			&:hover {
+				background: white;
+			}
+		}
+	}
+	.icon-carrot {
+		position: absolute;
+		width: 1.2rem;
+		height: 100%;
+		top: 0;
+		right: 2.5rem;
+		z-index: 1;
+		fill: map-get($colors, brand-cta);
+		transition: transform .35s ease;
+		svg {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&.dropdown-open {
+		ul {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+		.icon-carrot {
+			transform: rotate(180deg);
+		}
+	}
+
+	@include mq('medium', max) {
+		display: none;
+	}
+
+	& + select {
+		@include mq('medium') {
+			// display: none;
+			// html5 validation requires field to be accessible
+			// An invalid form control with name='product' is not focusable.
+			// alt solution is to position it absolutely behind the data-dropdown without pointer-events
+			position: absolute;
+			left: 0;
+			right: 0;
+			pointer-events: none;
+
+			// visibility: hidden;
+			z-index: -1; // instead of hidden, to preserve tabbing
+		}
+	}
+}

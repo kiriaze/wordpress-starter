@@ -326,30 +326,15 @@ else :
 					<h2 class="styleguide__heading">UI</h2>
 					<div class="styleguide-module__subgroup">
 						<h5 class="styleguide-module__title--small">Links</h5>
-						<div class="styleguide-module__subgroup">
-							<a href="javascript:;" class="link">
-								<div class="link__label">
-									A link
-								</div>
-								<span class="link__icon"></span>
-							</a>
+						<div class="styleguide-module__subgroup links">
+							<a href="javascript:;" class="link">Terms & Conditions</a>
+							<a href="javascript:;" class="link">Privacy Policy</a>
 						</div>
 						
 						<h5 class="styleguide-module__title--small">Buttons</h5>
 						<div class="styleguide-module__subgroup buttons">
-							<a href="javascript:;" class="button">Get Started Now</a>
-							<a href="javascript:;" class="button button--ghost">Get Started Now</a>
-						</div>
-
-						<h5 class="styleguide-module__title--small">Buttons on Pale?</h5>
-						<div class="styleguide-module__subgroup buttons other">
-							<a href="javascript:;" class="button button--inverted">Get Started Now</a>
-						</div>
-
-						<h5 class="styleguide-module__title--small">Buttons on Dark / Dash</h5>
-						<div class="styleguide-module__subgroup buttons dark">
-							<a href="javascript:;" class="button">Get Started Now</a>
-							<a href="javascript:;" class="button button--ghost">Get Started Now</a>
+							<a href="javascript:;" class="button">Shop Online</a>
+							<a href="javascript:;" class="button button--alt">Go to Online Store</a>
 						</div>
 
 						<h5 class="styleguide-module__title--small">Forms</h5>
@@ -357,15 +342,17 @@ else :
 						<div class="styleguide-module__subgroup">
 							<form action="">
 								<fieldset>
-									<div class="group">
-										<input required type="text" name="email">
-										<span class="bar"></span>
-										<label for="email">Email</label>
+									<div class="form-group">
+										<label for="first-name">First Name*</label>
+										<input required type="text" name="first-name">
 									</div>
-									<div class="group">
-										<input required type="password" name="password">
-										<span class="bar"></span>
-										<label for="password">Password</label>
+									<div class="form-group error">
+										<label for="first-name">First Name*</label>
+										<input required type="text" name="first-name">
+									</div>
+									<div class="form-group">
+										<label for="message">Message</label>
+										<textarea name="message" required></textarea>
 									</div>
 								</fieldset>
 								<br>

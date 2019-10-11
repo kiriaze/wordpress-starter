@@ -7,7 +7,7 @@ if ( module.hot ) {
 // SCSS imports
 //=======================================
 
-// import '../scss/styleguide.scss';
+import '../scss/styleguide.scss';
 
 //=======================================
 // JS

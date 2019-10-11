@@ -40,6 +40,8 @@ import utility from './utility.js';
 
 // 
 import ui from './ui.js';
+import forms from './forms.js';
+import pageNavigation from './pageNavigation';
 
 // Views
 // e.g. checkout
@@ -61,24 +63,63 @@ class App {
 		document.addEventListener('DOMContentLoaded', () => {
 			this.$html[0].classList.add('has-loaded');
 			this.init();
+			this.modules();
+			this.mutationWatch();
 		});
 	}
 
 	init() {
 
 		// console.log('init...');
-		
-		skrolly();
-		lazyload();
 		debounce();
 		throttle();
 
 		ui();
 		utility.init();
+		pageNavigation();
 
 		// menu();
 
-	};
+	}
+
+	modules() {
+		// these need to be rerun/reindexed
+		skrolly();
+		lazyload();
+		// 
+		forms();
+		// modals();
+		// carousels();
+
+	}
+
+	mutationWatch() {
+		// DOM element we want to observe
+		let targetNode = document.querySelector('[data-ajax-wrap]');
+		// Options for the observer
+		let config = {
+			childList: true,
+			// attributes: true,
+			// attributeOldValue: true,
+			// attributeFilter: ['class'],
+		};
+		// Callback will execute when mutations are observed
+		let callback = (mutationsList) => {
+			
+			// rerun scripts..
+			ui();
+			this.modules();
+
+			// // possibly match each mutations data-attr to match js callbacks
+			// for(let mutation of mutationsList) {
+			// 	console.log('something', mutation);
+			// }
+		};
+		// Create a new observer, passing in the callback function
+		let observer = new MutationObserver(callback);
+		// Start observing the targetNode with the given configuration
+		observer.observe(targetNode, config);
+	}
 
 }
 

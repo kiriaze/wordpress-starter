@@ -1,0 +1,20 @@
+// stamp
+@keyframes spin {
+	0% {
+		transform: rotateZ(0);
+	}
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+// submenus / tabs?
+@keyframes reveal {
+	from {
+		opacity: 0;
+		// transform: translateY(5%);
+	}
+	to {
+		opacity: 1;
+		// transform: translateY(0%);
+	}
+}

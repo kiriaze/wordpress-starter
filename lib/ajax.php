@@ -1,6 +1,50 @@
 <?php
 
 /********************************************************
+* Gform Entries
+********************************************************/
+
+function gform_entry() {
+
+	if ( isset($_REQUEST) ) {
+
+		$form = $_POST['form'];
+
+		switch ($form) {
+			
+			case 'newsletter':
+
+				$email    = $_POST['email'];
+				$formID   = getGformIDByTitle('Newsletter');
+				
+				// auto generate gravity form entry on newsletter submission along with gform hooks
+				$formData = array(
+					'input_1'   => $email
+				);
+
+				// sp($formData);
+
+				$result = GFAPI::submit_form( $formID, $formData );
+
+				echo json_encode($result);
+
+				break;
+
+			default:
+				break;
+		}
+
+	}
+
+	die();
+}
+
+add_action( 'wp_ajax_gform_entry', 'gform_entry' );
+add_action( 'wp_ajax_nopriv_gform_entry', 'gform_entry' );
+
+
+
+/********************************************************
 * MailChimp
 ********************************************************/
 
@@ -49,79 +93,3 @@
 
 // add_action( 'wp_ajax_newsletter_ajax_request', 'newsletter_ajax_request' );
 // add_action( 'wp_ajax_nopriv_newsletter_ajax_request', 'newsletter_ajax_request' );
-
-
-/********************************************************
-* Gform Entries
-********************************************************/
-
-// function gform_entry() {
-
-// 	if ( isset($_REQUEST) ) {
-
-// 		$form = $_POST['form'];
-
-// 		switch ($form) {
-			
-// 			case 'newsletter':
-
-// 				$email    = $_POST['email'];
-// 				$fullname = explode(' ', $_POST['full_name']);
-// 				$formID   = getGformIDByTitle('Newsletter');
-				
-// 				// auto generate gravity form entry on newsletter submission along with gform hooks
-// 				$formData = array(
-// 					'input_1_3' => $fullname[0],
-// 					'input_1_6' => $fullname[1],
-// 					'input_2'   => $email
-// 				);
-
-// 				// sp($formData);
-
-// 				$result = GFAPI::submit_form( $formID, $formData );
-
-// 				echo json_encode($result);
-
-// 				break;
-			
-// 			case 'contact':
-
-// 				$email    = $_POST['email'];
-// 				$fullname = explode(' ', $_POST['full_name']);
-// 				$phone    = $_POST['phone'];
-// 				$cityZip  = $_POST['city_zip'];
-// 				$interest = $_POST['interest'];
-// 				$message  = $_POST['message'];
-
-// 				$formID   = getGformIDByTitle('Contact Form');
-				
-// 				// auto generate gravity form entry on newsletter submission along with gform hooks
-// 				$formData = array(
-// 					'input_1_3' => $fullname[0],
-// 					'input_1_6' => $fullname[1],
-// 					'input_2'   => $email,
-// 					'input_3'   => $phone,
-// 					'input_4'   => $cityZip,
-// 					'input_6'   => $interest,
-// 					'input_5'   => $message
-// 				);
-
-// 				// sp($formData);
-
-// 				$result = GFAPI::submit_form( $formID, $formData );
-
-// 				echo json_encode($result);
-
-// 				break;
-
-// 			default:
-// 				break;
-// 		}
-
-// 	}
-
-// 	die();
-// }
-
-// add_action( 'wp_ajax_gform_entry', 'gform_entry' );
-// add_action( 'wp_ajax_nopriv_gform_entry', 'gform_entry' );

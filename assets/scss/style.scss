@@ -3,21 +3,25 @@
 @import './global/style';
 @import './patterns/style';
 
-// Modules
-@import './modules/style';
-
 // Node Plugins
 // @import '~magnific-popup/dist/magnific-popup.css';
+
+// UI
+@import 'ui/lazyload';
+@import 'ui/skrolly';
+@import 'ui/alerts';
+@import 'ui/tabs';
+@import 'ui/accordions';
+@import 'ui/dropdown';
+@import 'ui/buttons';
+@import 'ui/forms';
+@import 'ui/modals';
+@import 'ui/animations';
+
+// Modules
+@import './modules/style';
 
 // Layout
 @import 'layout/general';
 @import 'layout/header';
 @import 'layout/footer';
-
-// UI
-@import 'ui/skrolly';
-// @import 'ui/alerts';
-// @import 'ui/accordions';
-@import 'ui/buttons';
-// @import 'ui/forms';
-// @import 'ui/modals';

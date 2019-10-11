@@ -1,5 +1,9 @@
 const skrolly = ( params = {} ) => {
 
+	// issues:
+		// translate3d is messing with z index of elem/children
+			// solution: remove data-skrolly from elems once animations are done; requestAnimationFrame
+
 	// params = {
 	// 	reverse: false,
 	// 	el: '[data-skrolly]', 
@@ -25,6 +29,9 @@ const skrolly = ( params = {} ) => {
 
 	const reveal = (el) => {
 		el.classList.add(revealClass);
+		// if ( !el.classList.contains(revealClass) ) {
+		// 	requestAnimationFrame(reveal(el));
+		// }
 	};
 
 	const dereveal = (el) => {
@@ -59,7 +66,18 @@ const skrolly = ( params = {} ) => {
 				entry.target.style.transitionDelay = delay;
 				reveal(entry.target);
 
-				// run callback
+				// requestAnimationFrame check to remove data-skrolly from elements, to fix issues with elem/children of elem having their z-index affected when translate3d is used (css animations off of data-skrolly.revealed)
+				// requestAnimationFrame(reveal(entry.target));
+				// using transitionend instead for now...i have no idea how to fix this...
+				// should we not position elems with transforms...?fuck man..
+				// entry.target.addEventListener('transitionend', () => {
+				// 	let style = getComputedStyle(entry.target);
+				// 	// console.log(style.transform);
+				// 	// entry.target.style.transform = style.transform;
+				// 	entry.target.style.transform = 'none';
+				// });
+
+				// run callback if passed
 				if ( cb ) {
 					cb = cb.replace(/\s+/g, '').split(',');
 					for (var i = 0, len = cb.length; i < len; i++) {

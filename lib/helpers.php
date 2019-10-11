@@ -340,7 +340,6 @@ function truncate_text( $string, $character_limit = 50, $truncation_indicator = 
 	if ( $getlength > $character_limit ) {
 
 		$truncated = substr( $truncated, 0, strrpos(substr($truncated, 0, $character_limit), ' ') );
-		$truncated .= '...';
 
 		$truncated = $truncated . $truncation_indicator;
 	}
@@ -354,8 +353,8 @@ function truncate_words( $text, $limit, $truncation_indicator = '...' ) {
 
 	if ( str_word_count($text, 0) > $limit ) {
 		$words = str_word_count($text, 2);
-		$pos = array_keys($words);
-		$text = substr($text, 0, $pos[$limit]) . '...' . $truncation_indicator;
+		$pos   = array_keys($words);
+		$text  = substr($text, 0, $pos[$limit]) . $truncation_indicator;
 	}
 	return $text;
 }

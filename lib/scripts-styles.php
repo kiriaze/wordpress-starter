@@ -14,13 +14,16 @@ function theme_enqueue_scripts() {
 		define('ENFORCE_GZIP', true);
 	}
 
+	// disable gutenburg
+	wp_dequeue_style('wp-block-library');
+
 	// Register Styles & Scripts
 
 	// JS
 	// if local
 	if ( $_SERVER['SERVER_NAME'] === 'localhost' || strpos($_SERVER['SERVER_NAME'], '.local') !== false ) :
 
-		$path = '//127.0.0.1:3000/';
+		$path = '//127.0.0.1:3000';
 
 		// enqueing this in the header rather than the footer helps with local animations/lazyloading/etc.
 		$footer = false;

@@ -40,10 +40,8 @@ function wps_setup() {
 	// Custom Image Sizes
 	add_theme_support( 'post-thumbnails' );
 
-	// add_image_size('article-hero', 1700, 870, true);
-	// max-width of site container? 1680/1920
-	// general rul for full-width elements; hero/banners/etc
-	// add_image_size('full', 1680, 0);
+	// general rule for full-width elements; hero/banners/etc
+	add_image_size('full', 1680, 0);
 
 	// HTML5 -Switches default core markup for search form, comment form, and comments to output valid HTML5.
 	add_theme_support( 'html5', array(
@@ -90,7 +88,7 @@ function wps_setup() {
 		switch ($post_type) {
 			
 			case 'page':
-			case 'events':
+			case 'product':
 				return false;
 				break;
 			
@@ -101,6 +99,29 @@ function wps_setup() {
 		return $is_enabled;
 		
 	}
+
+	///////////////////////////////////////////
+	// Other
+	///////////////////////////////////////////
+	
+	// disable the theme editor view within the wp admin
+	function disable_theme_editing() {
+		define('DISALLOW_FILE_EDIT', TRUE);
+	}
+	add_action('init','disable_theme_editing');
+	
+	// hide smcpt plugin from admin if not on local
+	function wps_remove_admin_menus() {
+		// get the current site url
+		$site_url = get_bloginfo( 'url' );
+		if ( $site_url === 'https://relef.local' ) {
+			// show the acf menu item 	
+		} else {
+			// hide the acf menu item 
+			remove_menu_page('smcpt-settings');
+		}
+	}
+	add_action( 'admin_menu', 'wps_remove_admin_menus', 999 );
 
 	///////////////////////////////////////////
 	// ACF
