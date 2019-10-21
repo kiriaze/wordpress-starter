@@ -1,0 +1,35 @@
+.tabs {
+	&__nav {
+		display: flex;
+		margin-bottom: 3.5rem;
+		li {
+			line-height: 1;
+			cursor: pointer;
+			font-weight: 500;
+			position: relative;
+			margin-right: 6rem;
+			&:last-child {
+				margin-right: 0;
+			}
+			&.is-active {
+				
+			}
+		}
+	}
+	&__content {
+		position: relative;
+		[data-tab-content] {
+			padding: 0;
+			display: none;
+			animation-name: reveal;
+			animation-direction: normal;
+			animation-duration: 0.75s;
+			animation-iteration-count: 1;
+			animation-timing-function: ease-in-out;
+			&.is-active {
+				display: flex;
+				flex-flow: column;
+			}
+		}
+	}
+}

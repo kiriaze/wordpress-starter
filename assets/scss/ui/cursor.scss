@@ -1,0 +1,71 @@
+* {
+	cursor: none;
+}
+
+.cursor {
+	
+	width: 30px;
+	height: 30px;
+	top: -15px;
+	left: -15px;
+	transform: translateX(-15px) translateY(-15px);
+
+	z-index: 9999;
+	position: fixed;
+	pointer-events: none;
+	transition: opacity .6s ease-in-out,
+				width .3s ease-in-out,
+				height .3s ease-in-out,
+				left .3s ease-in-out,
+				top .3s ease-in-out;
+
+	svg {
+		width: 100%;
+		position: fixed;
+		transform: rotate(-90deg);
+		transition: 600ms all cubic-bezier(.23,1,.32,1);
+		path {
+			width: 20px;
+			height: 20px;
+			fill: #fff;
+			transition: 600ms all cubic-bezier(.23,1,.32,1);
+		}
+	}
+
+	&.is-hidden {
+		svg {
+		opacity: 0;
+			
+		}
+	}
+
+	&.style-1 {
+		width: 60px;
+		height: 60px;
+		top: -30px;
+		left: -30px;
+		transform: translateX(-30px) translateY(-30px);
+	}
+
+	&.style-2 {
+		width: 100px;
+		height: 100px;
+		top: -50px;
+		left: -50px;
+		transform: translate(-50px, -50px);
+		
+		svg path {
+			fill: transparent;
+			stroke: #fff;
+		}
+	}
+}
+
+.foobar {
+	padding: 2rem;
+	background: rgba(255,255,255,.1);
+	a {
+		color: #fff;
+		padding: 1rem;
+	}
+}

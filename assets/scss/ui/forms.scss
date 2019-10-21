@@ -1,0 +1,144 @@
+form {
+
+	.response {
+		display: none;
+		margin: 5vw 0;
+		position: relative;
+		text-align: center;
+	}
+
+	.parsley-errors-list,
+	.error-message {
+		margin-top: 1rem;
+		font-size: 1.6rem;
+		color: map-get($colors, state-error);
+	}
+	
+	// apply cta styles, .link, inherit proper styles
+	button {
+		font-family: inherit;
+		line-height: inherit;
+	}
+
+	.form-row {
+		position: relative; // skrolly/dropdown
+		display: flex;
+		justify-content: space-between;
+		@include mq('medium', max) {
+			flex-flow: column;
+		}
+		.form-group {
+			@include mq('medium') {
+				width: 49%;
+			}
+		}
+		.button {
+			margin: 6rem auto 0;
+			@include mq('medium') {
+				margin: 8rem auto 0;
+			}
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.form-group { 
+		position: relative;
+		margin-bottom: 2rem;
+		@include mq('medium') {
+			margin-bottom: 3rem;
+		}
+		
+		> label {
+			display: block;
+			font-weight: 700;
+			font-size: 1.2rem;
+			margin-bottom: 0.8rem;
+			letter-spacing: .008rem;
+			color: map-get($colors, brand-cta);
+			@include mq('medium') {
+				font-size: 1.6rem;
+				margin-bottom: 1.4rem;
+			}
+		}
+		
+		// input,
+		input:not([name="rating"]),
+		textarea {
+			display: block;
+			width: 100%;
+			border: none;
+			font-size: 1.2rem;
+			line-height: 3rem;
+			padding: 0.4rem 1.5rem;
+			font-family: $body-font;
+			color: map-get($colors, brand-cta);
+			background: map-get($colors, brand-primary);
+			border: 0.1rem solid map-get($colors, brand-divider);
+			@include mq('medium') {
+				font-size: 1.6rem;
+				padding: 1.2rem 3rem;
+			}
+			&:focus {
+				outline: none;
+			}
+			&::placeholder {
+				
+			}
+		}
+
+		textarea {
+			padding: 2rem 3rem;
+			height: 20rem; // base height / js resizes dynamically
+		}
+
+		select {
+			width: 100%;
+			appearance: none;
+			border-radius: 0;
+			font-size: 1.2rem;
+			font-weight: 500;
+			line-height: 3rem;
+			padding: 0.4rem 1.5rem;
+			font-family: $body-font;
+			color: map-get($colors, brand-cta);
+			background-color: map-get($colors, brand-primary);
+			border: .1rem solid map-get($colors, brand-divider);
+			@include mq('medium') {
+				font-size: 1.6rem;
+				padding: 1.2rem 3rem;
+			}
+		}
+		
+		// used mostly for data-dropdown
+		&__wrapper {
+			position: relative;
+			@include mq('medium', max) {
+				&:after {
+					content: '';
+					position: absolute;
+					top: 0;
+					right: 1.5rem;
+					width: 1.2rem;
+					height: 100%;
+					opacity: .5;
+					transform: rotateZ(180deg);
+					// background: url(../vectors/carrot.svg) no-repeat center;
+				}
+			}
+		}
+
+		&.has-error {
+			label {
+				color: #df3333;
+			}
+			input,
+			textarea,
+			&.form-group--dropdown [data-dropdown] {
+				background-color: #f6dcdc;
+				border-color: map-get($colors, state-error);
+			}
+		}
+	}
+}
