@@ -65,9 +65,7 @@ class App {
 		this.$body       = $('body');
 
 		document.addEventListener('DOMContentLoaded', () => {
-			setTimeout( () => {
-				this.$html[0].classList.add('has-loaded');
-			}, 1000);
+			this.$html[0].classList.add('has-loaded');
 			this.init();
 			this.modules();
 			this.mutationWatch();

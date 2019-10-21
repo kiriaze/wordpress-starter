@@ -6,8 +6,6 @@ get_template_part('partials/svg');
 
 get_template_part('partials/cursor');
 
-echo '<div class="page-loader"></div>';
-
 // not a custom view
 if ( wps_display_custom_template() ) : 
 
