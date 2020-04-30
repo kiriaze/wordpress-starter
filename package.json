@@ -41,7 +41,7 @@
   "dependencies": {
     "cleave.js": "^1.5.3",
     "intersection-observer": "^0.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "magnific-popup": "^1.1.0",
     "parsleyjs": "^2.9.1",
     "swiper": "^5.0.4",
