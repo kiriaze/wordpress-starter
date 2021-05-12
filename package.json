@@ -44,7 +44,7 @@
     "jquery": "^3.4.1",
     "magnific-popup": "^1.1.0",
     "parsleyjs": "^2.9.1",
-    "swiper": "^5.0.4",
+    "swiper": "^6.5.1",
     "validator": "^11.1.0"
   },
   "browserslist": [
