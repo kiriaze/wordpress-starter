@@ -45,7 +45,7 @@
     "magnific-popup": "^1.1.0",
     "parsleyjs": "^2.9.1",
     "swiper": "^5.0.4",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "browserslist": [
     "last 2 version",
